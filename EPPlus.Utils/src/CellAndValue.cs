@@ -27,6 +27,16 @@ namespace EPPlus.Utils.src
 			range.Value = value;
 		}
 
+		public static void SetWidth(this ExcelRangeBase cell, double width)
+		{
+			cell.Worksheet.Column(cell.Address.AddressToNumber()[1]).SetWidth(width);
+		}
+
+		public static void SetHeight(this ExcelRangeBase cell, double height)
+		{
+			cell.Worksheet.Row(cell.Address.AddressToNumber()[0]).SetHeight(height);
+		}
+
 		public static bool WithValue(this ExcelRangeBase range, string value)
 		{
 			return range.NotNullOrEmpty() && range.Value.ToString().Contains(value);

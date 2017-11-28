@@ -92,11 +92,11 @@ namespace EPPlus.Utils.src
 			range.Worksheet.DeleteColumn(range.Start.Address.AddressToNumber()[1]);
 		}
 
-		public static void SetStyle(this ExcelRangeBase cell, string format)
+		public static void SetNumberStyle(this ExcelRangeBase cell, string format)
 		{
 			cell.Style.Numberformat.Format = format;
 		}
-
+		
 		public static void SetWidth(this ExcelColumn column, double width)
 		{
 			var num1 = width >= 1.0 ? Math.Round((Math.Round(7.0 * (width - 0.0), 0) - 5.0) / 7.0, 2) : Math.Round((Math.Round(12.0 * (width - 0.0), 0) - Math.Round(5.0 * width, 0)) / 12.0, 2);
