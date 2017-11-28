@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>EPPlus.Utils</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>EPPlus.Utils</title>
     <authors>Henry He</authors>
     <owners>Henry He</owners>
@@ -11,12 +11,12 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
         EPPlus extension that contains many useful utils for better controll of your excle package.
-        1. CellAndValue
-        2. ColumnAndRow
-        3. CSVParser
+        1. CellAndValue - Check value existence, compare/replace/set value, convert cell address
+        2. ColumnAndRow - Insert and remove rows/columns, move column/row index, copy/set style, expand selection, set true width/height.
+        3. CSVParser - Convert CSV file into a EPPlus readable Stream
         4. Range
     </description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>Init Version</releaseNotes>
     <copyright>Copyright Henry He_FireAwayH</copyright>
     <tags>EPPlus Excel Spreadsheet sheets CSV</tags>
   </metadata>

@@ -2,31 +2,84 @@
 using OfficeOpenXml;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace EPPlus.Utils.src
 {
+	public enum InsertMode
+	{
+		RowBefore,
+		RowAfter,
+		ColumnRight,
+		ColumnLeft
+	}
+
 	public static class ColumnAndRow
 	{
-		public static void InsertRowsBelow(this ExcelRangeBase range, IList YIndex, int XSize = 0, string defaultValue = "")
+		public static void InsertOneRow(this ExcelRangeBase range, IList valuesToInsert, int copyStyleFromRowIndex, InsertMode Mode, int columnsToExpand = 0, string defaultValue = "")
 		{
-			var rcs = range.Start.Address.AddressToNumber();
-			var rce = range.End.Address.AddressToNumber();
-			range.Worksheet.InsertRow(rcs[0] + 1, YIndex.Count, 2);
-			for (var i = 0; i < YIndex.Count; i++)
+			var mode = 0;
+			var rowIndex = new int[2];
+
+			if (Mode == InsertMode.RowBefore)
 			{
-				range.Worksheet.SetValue(i + rcs[0] + 1, rcs[1], YIndex[i]);
-				for (var j = 0; j < XSize; j++)
+				rowIndex = range.Start.Address.AddressToNumber();
+				mode = -1;
+			}
+
+			if (Mode == InsertMode.RowAfter)
+			{
+				rowIndex = range.End.Address.AddressToNumber();
+				mode = 1;
+			}
+
+			range.Worksheet.InsertRow(rowIndex[0] + mode, valuesToInsert.Count, copyStyleFromRowIndex);
+			for (var i = valuesToInsert.Count - 1; i >= 0; i--)
+			{
+				range.Worksheet.SetValue(rowIndex[0] + (1 + i) * mode, rowIndex[1], valuesToInsert[i]);
+				for (var j = 0; j < columnsToExpand; j++)
 				{
-					range.Worksheet.SetValue(i + rcs[0] + 1, rcs[1] + 1 + j, defaultValue); // You must set value to newly inserted cells, otherwise the sheet can't get its range address
+					range.Worksheet.SetValue(rowIndex[0] + (1 + i) * mode, rowIndex[1] + 1 + j, defaultValue); // You must set value to newly inserted cells, otherwise the sheet can't get its range address
 				}
 			}
 		}
 
-		public static int[] ExpandRow(this int[] index, int offset)
+		public static void InsertOneColumn(this ExcelRangeBase range, IList valuesToInsert, int copyStyleFromColumnIndex, InsertMode Mode, int rowsToExpand = 0, string defaultValue = "")
 		{
-			var newIndex = index;
-			newIndex[2] += offset;
-			return newIndex;
+			var mode = 0;
+			var columnIndex = new int[2];
+
+			if (Mode == InsertMode.ColumnRight)
+			{
+				columnIndex = range.End.Address.AddressToNumber();
+				mode = 1;
+			}
+
+			if (Mode == InsertMode.ColumnLeft)
+			{
+				columnIndex = range.Start.Address.AddressToNumber();
+				mode = -1;
+			}
+
+			range.Worksheet.InsertColumn(columnIndex[1] + mode, valuesToInsert.Count, copyStyleFromColumnIndex);
+			for (var i = valuesToInsert.Count - 1; i >= 0; i--)
+			{
+				range.Worksheet.SetValue(columnIndex[0], columnIndex[1] + (1 + i) * mode, valuesToInsert[i]);
+				for (var j = 0; j < rowsToExpand; j++)
+				{
+					range.Worksheet.SetValue(columnIndex[0] + 1 + j, columnIndex[1] + (1 + i) * mode, defaultValue); // You must set value to newly inserted cells, otherwise the sheet can't get its range address
+				}
+			}
+		}
+
+		public static void InsertRows(this ExcelRangeBase range, IEnumerable<IList> listOfValuesToInsert, int copyStyleFromRowIndex, InsertMode Mode, int columnsToExpand = 0, string defaultValue = "")
+		{
+			listOfValuesToInsert.ForEach(valuesToInsert => range.InsertOneRow(valuesToInsert, copyStyleFromRowIndex, Mode, columnsToExpand, defaultValue));
+		}
+
+		public static void InsertColumns(this ExcelRangeBase range, IEnumerable<IList> listOfValuesToInsert, int copyStyleFromColumnIndex, InsertMode Mode, int rowsToExpand = 0, string defaultValue = "")
+		{
+			listOfValuesToInsert.ForEach(valuesToInsert => range.InsertOneColumn(valuesToInsert, copyStyleFromColumnIndex, Mode, rowsToExpand, defaultValue));
 		}
 
 		public static void RemoveRangeRow(this ExcelRangeBase range)
@@ -34,11 +87,15 @@ namespace EPPlus.Utils.src
 			range.Worksheet.DeleteRow(range.Start.Address.AddressToNumber()[0]);
 		}
 
+		public static void RemoveRangeColumn(this ExcelRangeBase range)
+		{
+			range.Worksheet.DeleteColumn(range.Start.Address.AddressToNumber()[1]);
+		}
+
 		public static void SetStyle(this ExcelRangeBase cell, string format)
 		{
 			cell.Style.Numberformat.Format = format;
 		}
-
 
 		public static void SetWidth(this ExcelColumn column, double width)
 		{
@@ -55,6 +112,21 @@ namespace EPPlus.Utils.src
 			}
 		}
 
+		public static void SetHeight(this ExcelRow row, double height)
+		{
+			var num1 = height >= 1.0 ? Math.Round((Math.Round(7.0 * (height - 0.0), 0) - 5.0) / 7.0, 2) : Math.Round((Math.Round(12.0 * (height - 0.0), 0) - Math.Round(5.0 * height, 0)) / 12.0, 2);
+			var num2 = height - num1;
+			var num3 = height >= 1.0 ? Math.Round(7.0 * num2 - 0.0, 0) / 7.0 : Math.Round(12.0 * num2 - 0.0, 0) / 12.0 + 0.0;
+			if (num1 > 0.0)
+			{
+				row.Height = height + num3;
+			}
+			else
+			{
+				row.Height = 0.0;
+			}
+		}
+
 		//
 		// Summary:
 		//     Expand the current range index to new index, only expand column range
@@ -68,6 +140,13 @@ namespace EPPlus.Utils.src
 		{
 			var newIndex = index;
 			newIndex[3] += offset;
+			return newIndex;
+		}
+
+		public static int[] ExpandRow(this int[] index, int offset)
+		{
+			var newIndex = index;
+			newIndex[2] += offset;
 			return newIndex;
 		}
 
