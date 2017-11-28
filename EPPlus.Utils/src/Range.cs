@@ -2,7 +2,7 @@
 
 namespace EPPlus.Utils.src
 {
-	public static class RangeUtils
+	public static class Range
 	{
 		public static ExcelRange GetRange(this ExcelWorksheet sheet, int[] index)
 		{

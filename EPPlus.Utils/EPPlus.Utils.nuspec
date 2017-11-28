@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>EPPlus.Utils</id>
+    <version>1.0.0</version>
+    <title>EPPlus.Utils</title>
+    <authors>Henry He</authors>
+    <owners>Henry He</owners>
+    <licenseUrl>https://opensource.org/licenses/LGPL-3.0</licenseUrl>
+    <projectUrl>https://github.com/hejiheji001/EPPlus.Utils</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+        EPPlus extension that contains many useful utils for better controll of your excle package.
+        1. CellAndValue
+        2. ColumnAndRow
+        3. CSVParser
+        4. Range
+    </description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>Copyright Henry He_FireAwayH</copyright>
+    <tags>EPPlus Excel Spreadsheet sheets CSV</tags>
+  </metadata>
+</package>

@@ -55,11 +55,13 @@
     <Compile Include="src\CellAndValue.cs" />
     <Compile Include="src\ColumnAndRow.cs" />
     <Compile Include="src\Misc.cs" />
-    <Compile Include="src\RangeUtils.cs" />
+    <Compile Include="src\Range.cs" />
     <Compile Include="src\CSVParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="EPPlus.Utils.1.0.0.nupkg" />
+    <None Include="EPPlus.Utils.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
