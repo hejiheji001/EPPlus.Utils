@@ -64,7 +64,6 @@
     <None Include="EPPlus.Utils.1.0.0.nupkg" />
     <None Include="EPPlus.Utils.nuspec" />
     <None Include="packages.config" />
-    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
