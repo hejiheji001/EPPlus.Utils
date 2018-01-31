@@ -10,12 +10,15 @@
     <projectUrl>https://github.com/hejiheji001/EPPlus.Utils</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-        EPPlus extension that contains many useful utils for better controll of your excle package.
-        1. CellAndValue - Check value existence, compare/replace/set value, convert cell address, set width/height.
-        2. ColumnAndRow - Insert, get and remove rows/columns, move column/row index, copy/set style, expand selection, set true width/height.
-        3. CSVParser - Convert CSV file into a EPPlus readable Stream.
-        4. Range - Get Range from position array and convert range to position array.
+      EPPlus extension that contains many useful utils for better controll of your excle package.
     </description>
+    <summary>
+      EPPlus extension that contains many useful utils for better controll of your excle package.
+      1. CellAndValue - Check value existence, compare/replace/set value, convert cell address, set width/height.
+      2. ColumnAndRow - Insert, get and remove rows/columns, move column/row index, copy/set style, expand selection, set true width/height.
+      3. CSVParser - Convert CSV file into a EPPlus readable Stream.
+      4. Range - Get Range from position array and convert range to position array.
+    </summary>
     <releaseNotes>Multiple Replace Value, GetRow/Column, Object to Dictionary</releaseNotes>
     <copyright>Copyright Henry He_FireAwayH</copyright>
     <tags>EPPlus Excel Spreadsheet sheets CSV</tags>
