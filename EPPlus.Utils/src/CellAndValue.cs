@@ -17,6 +17,24 @@ namespace EPPlus.Utils.src
 			range.Value = range.Value.ToString().Replace(target, value);
 		}
 
+		public static void MultipleReplaceValue(this ExcelRangeBase range, Dictionary<string, string> replacements)
+		{
+			if (range.Value == null) return;
+			range.Value = range.Value.ToString().MultipleReplace(replacements);
+		}
+
+		public static void MultipleReplaceValue(this ExcelRangeBase range, object replacements)
+		{
+			if (range.Value == null) return;
+			range.Value = range.Value.ToString().MultipleReplace(replacements);
+		}
+
+		public static void MultipleReplaceValue(this ExcelRangeBase range, params string[] replacements)
+		{
+			if (range.Value == null) return;
+			range.Value = range.Value.ToString().MultipleReplace(replacements);
+		}
+
 		public static void SetValue(this ExcelRange range, string value)
 		{
 			range.Value = value;

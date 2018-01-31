@@ -2,6 +2,7 @@
 using OfficeOpenXml;
 using System;
 using System.Collections;
+using System.Linq;
 
 namespace EPPlus.Utils.src
 {
@@ -323,6 +324,30 @@ namespace EPPlus.Utils.src
 			}
 
 			return to;
+		}
+
+		/// <summary>
+		/// get the row where current cell located
+		/// </summary>
+		/// <param name="cell">the current cell</param>
+		/// <param name="size">the length of the row</param>
+		/// <returns>The <paramref name="ExcelRange"/> the row</returns>
+		public static ExcelRange GetRow(this ExcelRangeBase cell, int size)
+		{
+			var cellIndex = (cell.Address.AddressToNumber().Concat(cell.Address.AddressToNumber())).ToArray();
+			return cell.Worksheet.GetRange(cellIndex.ExpandColumn(size));
+		}
+
+		/// <summary>
+		/// get the column where current cell located
+		/// </summary>
+		/// <param name="cell">the current cell</param>
+		/// <param name="size">the height of the column</param>
+		/// <returns>The <paramref name="ExcelRange"/> the column</returns>
+		public static ExcelRange GetColumn(this ExcelRangeBase cell, int size)
+		{
+			var cellIndex = (cell.Address.AddressToNumber().Concat(cell.Address.AddressToNumber())).ToArray();
+			return cell.Worksheet.GetRange(cellIndex.ExpandRow(size));
 		}
 	}
 }
