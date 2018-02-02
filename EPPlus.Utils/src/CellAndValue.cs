@@ -55,6 +55,11 @@ namespace EPPlus.Utils.src
 			cell.Worksheet.Row(cell.Address.AddressToNumber()[0]).SetHeight(height);
 		}
 
+		public static void SetStyle(this ExcelRangeBase cell, string format)
+		{
+			cell.Style.Numberformat.Format = format;
+		}
+
 		public static bool WithValue(this ExcelRangeBase range, string value)
 		{
 			return range.NotNullOrEmpty() && range.Value.ToString().Contains(value);
