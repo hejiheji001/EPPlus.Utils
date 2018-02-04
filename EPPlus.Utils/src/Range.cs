@@ -1,4 +1,7 @@
-﻿using OfficeOpenXml;
+﻿using Microsoft.Ajax.Utilities;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace EPPlus.Utils.src
 {
@@ -22,6 +25,17 @@ namespace EPPlus.Utils.src
 		public static ExcelRange GetRange(this ExcelRange range, int[] index)
 		{
 			return range[index[0], index[1], index[2], index[3]];
+		}
+
+		public static void AllBorder(this ExcelRange range, ExcelBorderStyle borderStyle)
+		{
+			range.ForEach(r => r.Style.Border.BorderAround(borderStyle));
+		}
+
+		public static void BackgroundColor(this ExcelRange range, Color color, ExcelFillStyle defaultFillStyle = ExcelFillStyle.Solid)
+		{
+			range.Style.Fill.PatternType = defaultFillStyle;
+			range.Style.Fill.BackgroundColor.SetColor(color);
 		}
 	}
 }
