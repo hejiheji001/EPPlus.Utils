@@ -54,14 +54,14 @@ namespace EPPlus.Utils.src
 				{
 					col = index[1] + i + ((mode + 1) / 2);
 					row = index[0];
-					colIndicator = (cellsToExpand / Math.Abs(cellsToExpand));
+					colIndicator = cellsToExpand == 0 ? 0 : (cellsToExpand / Math.Abs(cellsToExpand));
 				}
 
 				if (Mode == InsertMode.RowAfter || Mode == InsertMode.RowBefore)
 				{
 					col = index[1];
 					row = index[0] + i + ((mode + 1) / 2);
-					rowIndicator = (cellsToExpand / Math.Abs(cellsToExpand));
+					rowIndicator = cellsToExpand == 0 ? 0 : (cellsToExpand / Math.Abs(cellsToExpand));
 				}
 
 				range.Worksheet.SetValue(row, col, valuesToInsert[i]);
@@ -74,7 +74,7 @@ namespace EPPlus.Utils.src
 					}
 					catch (Exception e)
 					{
-						if(!e.Message.Contains("out of range"))
+						if (!e.Message.Contains("out of range"))
 						{
 							throw e;
 						}

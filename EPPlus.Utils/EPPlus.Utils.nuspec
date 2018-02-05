@@ -19,7 +19,7 @@
       3. CSVParser - Convert CSV file into a EPPlus readable Stream.
       4. Range - Get Range from position array and convert range to position array. Set border and background color
     </summary>
-    <releaseNotes>Multiple Replace Value, GetRow/Column, Object to Dictionary</releaseNotes>
+    <releaseNotes>Multiple Replace Value, GetRow/Column, Object to Dictionary, Set border and background color</releaseNotes>
     <copyright>Copyright Henry He_FireAwayH</copyright>
     <tags>EPPlus Excel Spreadsheet sheets CSV</tags>
   </metadata>
