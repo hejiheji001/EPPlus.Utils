@@ -291,18 +291,28 @@ namespace EPPlus.Utils.src
 		/// <param name="to">the new range where style will applied to</param>
 		/// <param name="offset">the old range where style will be copied</param>
 		/// <returns>The <paramref name="ExcelRange"/> after new style applied</returns>
-		public static ExcelRange CopyStyleFrom(this ExcelRange to, ExcelRange from, bool withValue = false)
+		public static ExcelRange CopyStyleFrom(this ExcelRange to, ExcelRange from, InsertMode mode = InsertMode.ColumnRight, bool withValue = false)
 		{
 			var fromIndex = from.GetRangeIndex();
 			var toIndex = to.GetRangeIndex();
-			var offset = fromIndex[3] - fromIndex[1] + 1;
-			var range = toIndex[3] - toIndex[1] + 1;
+			var offset = (mode.In(InsertMode.RowAfter, InsertMode.RowBefore) ? fromIndex[2] - fromIndex[0] : fromIndex[3] - fromIndex[1]) + 1;
+			var range = (mode.In(InsertMode.RowAfter, InsertMode.RowBefore) ? toIndex[2] - toIndex[0] : toIndex[3] - toIndex[1]) + 1;
 			var rest = range % offset;
 			var loop = (range - rest) / offset;
 			var index = 0;
 			for (; index < loop; index++)
 			{
-				var tmpRange = to.GetRange(new[] { fromIndex[0], fromIndex[1] + (index + 1) * offset, fromIndex[2], fromIndex[3] + (index + 1) * offset });
+				ExcelRange tmpRange = null;
+
+				if (mode.In(InsertMode.RowAfter, InsertMode.RowBefore))
+				{
+					tmpRange = to.GetRange(new[] { fromIndex[0] + (index + 1) * offset, fromIndex[1], fromIndex[2] + (index + 1) * offset, fromIndex[3] });
+				}
+				else
+				{
+					tmpRange = to.GetRange(new[] { fromIndex[0], fromIndex[1] + (index + 1) * offset, fromIndex[2], fromIndex[3] + (index + 1) * offset });
+				}
+
 				from.Copy(tmpRange);
 				if (!withValue)
 				{
@@ -349,5 +359,6 @@ namespace EPPlus.Utils.src
 			var cellIndex = (cell.Address.AddressToNumber().Concat(cell.Address.AddressToNumber())).ToArray();
 			return cell.Worksheet.GetRange(cellIndex.ExpandRow(size));
 		}
+
 	}
 }
