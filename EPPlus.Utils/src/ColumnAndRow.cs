@@ -78,7 +78,7 @@ namespace EPPlus.Utils.src
 				{
 					try
 					{
-						range.Worksheet.SetValue(row + (1 + j) * colIndicator, col + (1 + j) * rowIndicator, expandValues == null ? null : expandValues[j + i * Math.Abs(cellsToExpand)]); // You must set value to newly inserted cells, otherwise the sheet can't get its range address
+						range.Worksheet.SetValue(row + (1 + j) * colIndicator, col + (1 + j) * rowIndicator, expandValues == null ? null : expandValues[j + i * Math.Abs(cellsToExpand)]); // You must set value to newly inserted cells, otherwise the sheet can't get its range address.
 					}
 					catch (Exception e)
 					{
