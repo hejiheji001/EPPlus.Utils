@@ -46,6 +46,12 @@ namespace EPPlus.Utils.src
 			range.Style.Fill.BackgroundColor.SetColor(color);
 		}
 
+		public static void RemoveRange(this ExcelRangeBase rangeBase, RemoveMode Mode)
+		{
+			var range = rangeBase.Worksheet.Cells[rangeBase.Address];
+			RemoveRange(range, Mode);
+		}
+
 		public static void RemoveRange(this ExcelRange range, RemoveMode Mode)
 		{
 			var sheet = range.Worksheet;
@@ -54,7 +60,7 @@ namespace EPPlus.Utils.src
 			{
 				var cs = range.Start.Column;
 				var ce = range.End.Column;
-				sheet.DeleteColumn(cs);
+				sheet.DeleteColumn(cs, ce - cs + 1);
 			}
 
 			if (Mode.Equals(RemoveMode.Row))
