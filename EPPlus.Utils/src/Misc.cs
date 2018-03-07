@@ -38,6 +38,26 @@ namespace EPPlus.Utils.src
 			return c.All(i => !i.Equals(t));
 		}
 
+		public static bool HaveAll<T>(this IEnumerable<T> t, IEnumerable<T> c)
+		{
+			return t.All(i => c.Contains(i));
+		}
+
+		public static bool HaveAny<T>(this IEnumerable<T> t, IEnumerable<T> c)
+		{
+			return t.Any(i => c.Contains(i));
+		}
+
+		public static bool HaveAll<T>(this IEnumerable<T> t, params T[] c)
+		{
+			return t.All(i => c.Contains(i));
+		}
+
+		public static bool HaveAny<T>(this IEnumerable<T> t, params T[] c)
+		{
+			return t.Any(i => c.Contains(i));
+		}
+
 		public static IDictionary<string, T> ToDictionary<T>(this object source)
 		{
 			if (source == null)

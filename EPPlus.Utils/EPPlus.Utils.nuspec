@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>EPPlus.Utils</id>
-    <version>1.0.5.3</version>
+    <version>1.0.5.4</version>
     <title>EPPlus.Utils</title>
     <authors>Henry He</authors>
     <owners>Henry He</owners>
@@ -19,7 +19,10 @@
       3. CSVParser - Convert CSV file into a EPPlus readable Stream.
       4. Range - Get Range from position array and convert range to position array. Set border and background color
     </summary>
-    <releaseNotes>Bug fix</releaseNotes>
+    <releaseNotes>
+       1. Add: Remove Range
+       2. Bug fix for CopyStyleFrom()
+    </releaseNotes>
     <copyright>Copyright Henry He_FireAwayH</copyright>
     <tags>EPPlus Excel Spreadsheet sheets CSV</tags>
   </metadata>

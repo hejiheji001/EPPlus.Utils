@@ -14,6 +14,14 @@ namespace EPPlus.Utils.src
 		ColumnLeft
 	}
 
+	public enum RemoveMode
+	{
+		RightShift,
+		LowerShift,
+		Column,
+		Row
+	}
+
 	public static class ColumnAndRow
 	{
 		private static int[] GetIndex(this ExcelRangeBase range, IList valuesToInsert, InsertMode Mode, out int mode, int cellsToExpand = 0, IList expandValues = null)
@@ -146,6 +154,12 @@ namespace EPPlus.Utils.src
 		{
 			range.Worksheet.DeleteColumn(range.Start.Address.AddressToNumber()[1]);
 		}
+
+		public static void RemoveRange(this ExcelRange range, RemoveMode Mode)
+		{
+
+		}
+
 
 		/// <summary>
 		/// Set width for column
@@ -290,8 +304,9 @@ namespace EPPlus.Utils.src
 		/// </summary>
 		/// <param name="to">the new range where style will applied to</param>
 		/// <param name="offset">the old range where style will be copied</param>
+		/// <param name="skip">the number of rows or columns to skip</param>
 		/// <returns>The <paramref name="ExcelRange"/> after new style applied</returns>
-		public static ExcelRange CopyStyleFrom(this ExcelRange to, ExcelRange from, InsertMode mode = InsertMode.ColumnRight, bool withValue = false)
+		public static ExcelRange CopyStyleFrom(this ExcelRange to, ExcelRange from, InsertMode mode = InsertMode.ColumnRight, bool withValue = false, int skip = 0)
 		{
 			var fromIndex = from.GetRangeIndex();
 			var toIndex = to.GetRangeIndex();
@@ -306,11 +321,11 @@ namespace EPPlus.Utils.src
 
 				if (mode.In(InsertMode.RowAfter, InsertMode.RowBefore))
 				{
-					tmpRange = to.GetRange(new[] { fromIndex[0] + (index + 1) * offset, fromIndex[1], fromIndex[2] + (index + 1) * offset, fromIndex[3] });
+					tmpRange = to.GetRange(new[] { fromIndex[0] + (index + 1 + skip) * offset, fromIndex[1], fromIndex[2] + (index + 1 + skip) * offset, fromIndex[3] });
 				}
 				else
 				{
-					tmpRange = to.GetRange(new[] { fromIndex[0], fromIndex[1] + (index + 1) * offset, fromIndex[2], fromIndex[3] + (index + 1) * offset });
+					tmpRange = to.GetRange(new[] { fromIndex[0], fromIndex[1] + (index + 1 + skip) * offset, fromIndex[2], fromIndex[3] + (index + 1 + skip) * offset });
 				}
 
 				from.Copy(tmpRange);
