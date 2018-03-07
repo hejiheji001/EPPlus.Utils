@@ -7,6 +7,14 @@ namespace EPPlus.Utils.src
 {
 	public static class Range
 	{
+		public enum RemoveMode
+		{
+			RightShift,
+			LowerShift,
+			Column,
+			Row
+		}
+
 		public static ExcelRange GetRange(this ExcelWorksheet sheet, int[] index)
 		{
 			return sheet.Cells.GetRange(index);

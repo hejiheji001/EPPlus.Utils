@@ -13,15 +13,7 @@ namespace EPPlus.Utils.src
 		ColumnRight,
 		ColumnLeft
 	}
-
-	public enum RemoveMode
-	{
-		RightShift,
-		LowerShift,
-		Column,
-		Row
-	}
-
+	
 	public static class ColumnAndRow
 	{
 		private static int[] GetIndex(this ExcelRangeBase range, IList valuesToInsert, InsertMode Mode, out int mode, int cellsToExpand = 0, IList expandValues = null)
