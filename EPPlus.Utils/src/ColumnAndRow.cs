@@ -136,32 +136,6 @@ namespace EPPlus.Utils.src
 		//}
 
 		/// <summary>
-		/// Remove row which current range locates
-		/// </summary>
-		/// <param name="range">current range</param>
-		/// <returns></returns>
-		public static void RemoveRangeRow(this ExcelRangeBase range)
-		{
-			range.Worksheet.DeleteRow(range.Start.Address.AddressToNumber()[0]);
-		}
-
-		/// <summary>
-		/// Remove column which current range locates
-		/// </summary>
-		/// <param name="range">current range</param>
-		/// <returns></returns>
-		public static void RemoveRangeColumn(this ExcelRangeBase range)
-		{
-			range.Worksheet.DeleteColumn(range.Start.Address.AddressToNumber()[1]);
-		}
-
-		public static void RemoveRange(this ExcelRange range, RemoveMode Mode)
-		{
-
-		}
-
-
-		/// <summary>
 		/// Set width for column
 		/// </summary>
 		/// <param name="row">current column</param>
