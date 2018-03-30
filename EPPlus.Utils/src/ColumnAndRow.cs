@@ -33,7 +33,7 @@ namespace EPPlus.Utils.src
 				mode = 1;
 			}
 
-			if (Math.Abs(cellsToExpand) * valuesToInsert.Count != expandValues.Count)
+			if ((cellsToExpand > 0 && expandValues == null) || (expandValues != null && Math.Abs(cellsToExpand) * valuesToInsert.Count != expandValues.Count))
 			{
 				throw new Exception("Not All Expand Cells Have Value");
 			}
@@ -70,7 +70,7 @@ namespace EPPlus.Utils.src
 				{
 					try
 					{
-						range.Worksheet.SetValue(row + (1 + j) * colIndicator, col + (1 + j) * rowIndicator, expandValues == null ? null : expandValues[j + i * Math.Abs(cellsToExpand)]); // You must set value to newly inserted cells, otherwise the sheet can't get its range address.
+						range.Worksheet.SetValue(row + (1 + j) * colIndicator, col + (1 + j) * rowIndicator, expandValues == null ? null : expandValues[j + i * Math.Abs(cellsToExpand)]); // You must set value to newly inserted cells, otherwise the sheet can't get its range address
 					}
 					catch (Exception e)
 					{
